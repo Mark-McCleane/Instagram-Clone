@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/mccle/AndroidStudioProjects/Clonestagram/app/src/main/res/layout/activity_login.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/mccle/AndroidStudioProjects/Clonestagram/app/src/main/res/layout/activity_posts.xml" value="0.13489583333333333" />
         <entry key="..\:/Users/mccle/AndroidStudioProjects/Clonestagram/app/src/main/res/layout/activity_profile.xml" value="0.13489583333333333" />
+        <entry key="..\:/Users/mccle/AndroidStudioProjects/Clonestagram/app/src/main/res/layout/item_post.xml" value="0.2916666666666667" />
         <entry key="..\:/Users/mccle/AndroidStudioProjects/Clonestagram/app/src/main/res/menu/menu_posts.xml" value="0.13489583333333333" />
         <entry key="..\:/Users/mccle/AndroidStudioProjects/Clonestagram/app/src/main/res/menu/menu_profile.xml" value="0.22" />
       </map>
