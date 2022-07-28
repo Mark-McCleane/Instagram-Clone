@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clonestagram.Models.Post
 import com.example.clonestagram.Models.User
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -19,6 +20,7 @@ private const val EXTRAUSERNAME = "EXTRAUSERNAME"
 
 open class PostsActivity : AppCompatActivity() {
 
+    private lateinit var fabCreate: FloatingActionButton
     private lateinit var fireStoreDB: FirebaseFirestore
     private lateinit var posts: MutableList<Post>
     private lateinit var adapter: PostsAdapter
@@ -34,6 +36,7 @@ open class PostsActivity : AppCompatActivity() {
         recyclerViewPosts = findViewById(R.id.recyclerview_posts)
         recyclerViewPosts.adapter = adapter
         recyclerViewPosts.layoutManager = LinearLayoutManager(this)
+        fabCreate = findViewById(R.id.fabCreate)
 
         // TODO Move to Repository folder when doing MVVM
         val fireStoreDB = FirebaseFirestore.getInstance()
@@ -70,6 +73,10 @@ open class PostsActivity : AppCompatActivity() {
             for (post in postList) {
                 Log.i(TAG, "Post: $post")
             }
+        }
+        fabCreate.setOnClickListener{
+            val intent = Intent(this, CreateActivity::class.java)
+            startActivity(intent)
         }
     }
 
