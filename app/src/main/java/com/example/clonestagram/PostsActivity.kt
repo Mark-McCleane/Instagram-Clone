@@ -9,17 +9,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clonestagram.Models.Post
+import com.example.clonestagram.Models.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
 private const val TAG = "PostsActivity"
+private const val EXTRAUSERNAME = "EXTRAUSERNAME"
 
-class PostsActivity : AppCompatActivity() {
+open class PostsActivity : AppCompatActivity() {
+
     private lateinit var fireStoreDB: FirebaseFirestore
     private lateinit var posts: MutableList<Post>
     private lateinit var adapter: PostsAdapter
     private lateinit var recyclerViewPosts: RecyclerView
-
+    private var signedInUser:User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +37,26 @@ class PostsActivity : AppCompatActivity() {
 
         // TODO Move to Repository folder when doing MVVM
         val fireStoreDB = FirebaseFirestore.getInstance()
-        val postsReference = fireStoreDB
+        fireStoreDB.collection("users")
+            .document(FirebaseAuth.getInstance().currentUser?.uid as String)
+            .get().addOnSuccessListener { userSnapshot ->
+                signedInUser = userSnapshot.toObject(User::class.java)
+                Log.i(TAG, "signed in user: $signedInUser")
+            }
+            .addOnFailureListener{exception ->
+                Log.i(TAG, "Failure fetching singed in user", exception)
+            }
+
+        var postsReference = fireStoreDB
             .collection("posts")
             .limit(20)
             .orderBy("createdAt", Query.Direction.DESCENDING)
+
+        val username = intent.getStringExtra(EXTRAUSERNAME)
+        if (username != null) {
+            supportActionBar?.title = username
+            postsReference = postsReference.whereEqualTo("user.username", username)
+        }
 
         postsReference.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
@@ -61,6 +81,7 @@ class PostsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_profile) {
             val intent = Intent(this, ProfileActivity::class.java)
+            intent.putExtra(EXTRAUSERNAME, signedInUser?.username)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
