@@ -16,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
 private const val TAG = "PostsActivity"
-private const val EXTRAUSERNAME = "EXTRAUSERNAME"
+const val EXTRAUSERNAME = "EXTRAUSERNAME"
 
 open class PostsActivity : AppCompatActivity() {
 
@@ -39,7 +39,7 @@ open class PostsActivity : AppCompatActivity() {
         fabCreate = findViewById(R.id.fabCreate)
 
         // TODO Move to Repository folder when doing MVVM
-        val fireStoreDB = FirebaseFirestore.getInstance()
+        fireStoreDB = FirebaseFirestore.getInstance()
         fireStoreDB.collection("users")
             .document(FirebaseAuth.getInstance().currentUser?.uid as String)
             .get().addOnSuccessListener { userSnapshot ->

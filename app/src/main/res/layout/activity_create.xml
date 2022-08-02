@@ -15,13 +15,13 @@
         android:text="Choose Image" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_userselectedimage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
+    <EditText
         android:id="@+id/etDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
